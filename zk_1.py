@@ -10,7 +10,7 @@ def SequenceFromFile(file_name):
             data = f.read().split()
             return data
     except FileNotFoundError:
-        print(f"Cannot open file {file_name}. The file does not exist or the path to the file is incorect")
+        print(f"Cannot open file {file_name}. The file does not exist or the path to the file is incorrect")
         quit()
     except PermissionError:
         print(f"Program doesn't have permisson to acces file {file_name}.")
@@ -25,7 +25,7 @@ def WriteToFile(file_name, text):
         with open(file_name, mode="a", encoding="utf-8") as f:
             return f.write(str(text))
     except FileNotFoundError:
-        print(f"Cannot open file {file_name}. The file does not exist or the path to the file is incorect")
+        print(f"Cannot open file {file_name}. The file does not exist or the path to the file is incorrect")
         quit()
     except PermissionError:
         print(f"Program doesn't have permisson to acces file {file_name}.")
@@ -59,4 +59,3 @@ for object in sequence:
 WriteToFile("output.txt", f"\n\nThese duplicate elements ({sum(duplicates.values())} in total) were deleted from original sequence:\n")
 for (key, val) in duplicates.items():
     WriteToFile("output.txt", f"{key} - {val}x\n")
-
