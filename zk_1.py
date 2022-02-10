@@ -58,29 +58,29 @@ def SortList(input_list):
         input_list[i], input_list[min] = input_list[min], input_list[i]
     return input_list
 
-#Loading sequence from file, converting elements into integers and sorting it
-sequence = SequenceFromFile("input.txt")
-int_sequence = StrToInt(sequence)
-l = SortList(int_sequence)
+#Function for recognition of duplicate elements, storing their quantity and saving unique elements into new sequence and output file
+def DeleteDuplicates(input_list, final_list, dictionary):
+    i = 0
+    while i < (len(input_list)-1):
+        j = i+1
+        if input_list[i] != input_list[j] and input_list[i] not in final_list:
+            final_list.append(input_list[i])
+            WriteToFile("output.txt", f"{input_list[i]} ")
+        else:
+            dictionary[input_list[i]] = dictionary.setdefault(input_list[j], 0) + 1
+        i+=1
 
-#Loop for recognition of duplicate elements, storing their quantity and saving unique elements into new sequence and output file
-i = 0
+    #Check if the last element is in final list, if not append it
+    max = len(input_list)-1
+    if input_list[max] not in final_list:
+        final_list.append(input_list[max])
+        WriteToFile("output.txt", f"{input_list[max]} ")
+
+#Loading sequence from file, converting elements into integers, sorting it and deleting duplicate elements
 final = []
 duplicates = {}
-while i < (len(l)-1):
-    j = i+1
-    if l[i] != l[j] and l[i] not in final:
-        final.append(l[i])
-        WriteToFile("output.txt", f"{l[i]} ")
-    else:
-        duplicates[l[i]] = duplicates.setdefault(l[j], 0) + 1
-    i+=1
-
-#Check if the last element is in final list, if not append it
-max = len(l)-1
-if l[max] not in final:
-    final.append(l[max])
-    WriteToFile("output.txt", f"{l[max]} ")
+sequence = SortList(StrToInt(SequenceFromFile("input.txt")))
+DeleteDuplicates(sequence, final, duplicates)
 
 #Loop for writing duplicate elements and their quantity into output file
 WriteToFile("output.txt", f"\n\nThese duplicate elements ({sum(duplicates.values())} in total) were deleted from original sequence:\n")
