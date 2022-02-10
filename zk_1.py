@@ -59,7 +59,9 @@ def SortList(input_list):
     return input_list
 
 #Function for recognition of duplicate elements, storing their quantity and saving unique elements into new sequence and output file
-def DeleteDuplicates(input_list, final_list, dictionary):
+def DeleteDuplicates(input_list):
+    final_list = []
+    dictionary = {}
     i = 0
     while i < (len(input_list)-1):
         j = i+1
@@ -75,12 +77,11 @@ def DeleteDuplicates(input_list, final_list, dictionary):
     if input_list[max] not in final_list:
         final_list.append(input_list[max])
         WriteToFile("output.txt", f"{input_list[max]} ")
+    return final_list, dictionary
 
 #Loading sequence from file, converting elements into integers, sorting it and deleting duplicate elements
-final = []
-duplicates = {}
 sequence = SortList(StrToInt(SequenceFromFile("input.txt")))
-DeleteDuplicates(sequence, final, duplicates)
+final, duplicates = DeleteDuplicates(sequence)
 
 #Loop for writing duplicate elements and their quantity into output file
 WriteToFile("output.txt", f"\n\nThese duplicate elements ({sum(duplicates.values())} in total) were deleted from original sequence:\n")
